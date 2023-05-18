@@ -1,2 +1,3 @@
-# product-api
-product crud operation
+# dashboard-api
+
+dashboard data apis
