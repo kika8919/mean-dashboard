@@ -1,0 +1,21 @@
+mat-grid-tile {
+  background: #d4e2f2;
+}
+.dashboard {
+  padding: 20px;
+}
+.dashboard-card {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  right: 5px;
+  bottom: 5px;
+  border-radius: 5px;
+}
+.loader {
+  justify-content: center;
+  align-items: center;
+  top: 50%;
+  margin: 14% auto auto auto;
+  position: relative;
+}

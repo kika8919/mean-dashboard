@@ -1,0 +1,25 @@
+<div class="dashboard">
+  <mat-grid-list cols="2" rowHeight="350px" gutterSize="20px">
+    <mat-grid-tile
+      *ngFor="let card of enabledCards; index as i"
+      [colspan]="card.cols"
+      [rowspan]="card.rows"
+    >
+      <mat-card class="dashboard-card">
+        <ng-container *ngIf="card.type">
+          <mat-card-header>{{ card.description }}</mat-card-header>
+          <mat-card-content>
+            <mat-spinner
+              diameter="34"
+              *ngIf="card.isLoading"
+              class="loader"
+            ></mat-spinner>
+            <ng-container *ngIf="!card.isLoading">
+              {{ card.option.type }}
+            </ng-container>
+          </mat-card-content>
+        </ng-container>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
