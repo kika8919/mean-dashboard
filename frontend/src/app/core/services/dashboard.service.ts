@@ -8,6 +8,7 @@ import { environment } from 'src/environment/environment';
 })
 export class DashboardService {
   dashboardBaseUrl: string = `${environment.api_url}${environment.dashboard_endpoint}`;
+  cardBaseUrl: string = `${environment.api_url}${environment.card_endpoint}`;
 
   constructor(private http: HttpClient) {}
 
@@ -39,5 +40,9 @@ export class DashboardService {
     return this.http.get(
       `${this.dashboardBaseUrl}${environment.get_element_table_data}`
     );
+  }
+
+  getAllCards(): Observable<any> {
+    return this.http.get(this.cardBaseUrl);
   }
 }

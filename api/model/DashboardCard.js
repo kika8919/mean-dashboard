@@ -8,7 +8,7 @@ const dashboardCardSchema = new mongoose.Schema(
     cols: { required: true, type: Number },
     rows: { required: true, type: Number },
     enabled: { default: true, type: Boolean },
-    heading: { required: true, type: String },
+    heading: String,
   },
   { timestamps: true }
 );

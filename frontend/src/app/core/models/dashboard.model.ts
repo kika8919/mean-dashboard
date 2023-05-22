@@ -1,5 +1,5 @@
 export interface DashboardCard {
-  id: number;
+  _id: number;
   type: string;
   description: string;
   cols: number;

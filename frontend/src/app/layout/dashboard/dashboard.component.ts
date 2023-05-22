@@ -50,12 +50,20 @@ export class DashboardComponent implements OnInit {
     private ref: ChangeDetectorRef,
     private dashboardSvc: DashboardService
   ) {
-    this.allCards = cards;
+    // this.allCards = cards;
   }
 
   ngOnInit(): void {
-    this.filterCards();
-    this.loadCards();
+    this.dashboardSvc.getAllCards().subscribe({
+      next: (data) => {
+        this.allCards = data;
+        this.filterCards();
+        this.loadCards();
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
   }
 
   filterCards() {
@@ -166,15 +174,15 @@ export class DashboardComponent implements OnInit {
   };
 
   stopCardLoading = (card: DashboardCard) => {
-    this.enabledCards.find(({ id }) => {
-      return card.id === id;
+    this.enabledCards.find(({ _id }) => {
+      return card._id === _id;
     })!.isLoading = false;
   };
 }
 
 export const cards: DashboardCard[] = [
   {
-    id: 1,
+    _id: 1,
     type: 'bar-chart',
     description: 'abc',
     cols: 1,
@@ -182,7 +190,7 @@ export const cards: DashboardCard[] = [
     enabled: true,
   },
   {
-    id: 2,
+    _id: 2,
     type: 'line-chart',
     description: 'test',
     cols: 1,
@@ -190,7 +198,7 @@ export const cards: DashboardCard[] = [
     enabled: true,
   },
   {
-    id: 3,
+    _id: 3,
     type: 'doughnut-chart',
     description: 'test2',
     cols: 1,
@@ -198,7 +206,7 @@ export const cards: DashboardCard[] = [
     enabled: true,
   },
   {
-    id: 4,
+    _id: 4,
     type: 'pie-chart',
     description: 'test3',
     cols: 1,
@@ -206,7 +214,7 @@ export const cards: DashboardCard[] = [
     enabled: true,
   },
   {
-    id: 5,
+    _id: 5,
     type: 'table',
     description: 'element',
     cols: 2,
