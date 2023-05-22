@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+require("../model/DashboardCard")
 
 const uri = process.env.MONGODB_URI;
 
@@ -10,3 +11,4 @@ mongoose
   .catch((err) => {
     console.log(`error connecting mongodb ${err}`);
   });
+
