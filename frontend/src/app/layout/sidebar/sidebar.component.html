@@ -1,0 +1,17 @@
+<mat-toolbar class="toolbar">
+  <span>
+    <mat-icon class="logo">view_module</mat-icon>
+    <span class="mat-title"> DAS </span>
+  </span>
+  <mat-icon class="close" (click)="onToggleClose()">close</mat-icon>
+</mat-toolbar>
+<div class="contents">
+  <a mat-menu-item (click)="gotoDashboard()" class="toolbar">
+    <mat-icon>view_module</mat-icon>
+    <span>Dashboard</span>
+  </a>
+  <a mat-menu-item (click)="gotoCard()" class="toolbar">
+    <mat-icon>supervisor_account</mat-icon>
+    <span>Cards</span>
+  </a>
+</div>
