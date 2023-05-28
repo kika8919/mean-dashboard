@@ -11,7 +11,7 @@ const routes: Routes = [
     children: [
       { pathMatch: 'prefix', path: '', redirectTo: 'dashboard' },
       { path: 'dashboard', component: DashboardComponent },
-      { path: 'card', component: CardComponent },
+      { path: 'sign-up', component: CardComponent },
     ],
   },
 ];

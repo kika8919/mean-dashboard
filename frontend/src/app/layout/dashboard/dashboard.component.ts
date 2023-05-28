@@ -1,5 +1,11 @@
-import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
-import { map, mergeMap, of } from 'rxjs';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ChangeDetectorRef,
+  OnDestroy,
+} from '@angular/core';
+import { Subscription, map, mergeMap, of } from 'rxjs';
 import { DashboardCard, DashboardService } from 'src/app/core';
 import { ChartConfiguration, ChartOptions } from 'chart.js';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
@@ -10,7 +16,7 @@ import { MatTableDataSource } from '@angular/material/table';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
   allCards: DashboardCard[] = [];
   enabledCards: DashboardCard[] = [];
   title = 'ng2-charts-demo';
@@ -45,6 +51,7 @@ export class DashboardComponent implements OnInit {
   dataSource: any;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  filterSubs!: Subscription;
 
   constructor(
     private ref: ChangeDetectorRef,
@@ -54,6 +61,10 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.filterSubs = this.dashboardSvc.filterValue.subscribe((data) => {
+      this.filterCards(data, false);
+    });
+
     this.dashboardSvc.getAllCards().subscribe({
       next: (data) => {
         this.allCards = data;
@@ -66,13 +77,17 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  filterCards() {
+  filterCards(filterValue: string = '', loadCards: boolean = true) {
     this.enabledCards = this.allCards
-      .filter(({ enabled }) => enabled)
+      .filter(({ enabled, type }) => {
+        return (
+          enabled && type.toLowerCase().includes(filterValue.toLowerCase())
+        );
+      })
       .map((card) => {
         return {
           ...card,
-          isLoading: true,
+          isLoading: loadCards,
         };
       });
   }
@@ -127,42 +142,55 @@ export class DashboardComponent implements OnInit {
           switch (`${card.type}_${card.description}`) {
             case 'bar-chart_abc':
               card.option = { barChartData: data };
-              setTimeout(() => {
-                this.stopCardLoading(card);
-              }, 1000);
+              const barChartCard = this.allCards.find(({ _id }) => {
+                return _id == card._id;
+              });
+              barChartCard && (barChartCard.option = { barChartData: data });
+              this.stopCardLoading(card);
               break;
             case 'line-chart_test':
               card.option = { lineChartData: data };
-              setTimeout(() => {
-                this.stopCardLoading(card);
-              }, 1000);
+              const lineChartCard = this.allCards.find(({ _id }) => {
+                return _id == card._id;
+              });
+              lineChartCard && (lineChartCard.option = { lineChartData: data });
+              this.stopCardLoading(card);
               break;
             case 'doughnut-chart_test2':
               card.option = {
                 doughnutChartDatasets: data.datasets,
                 doughnutChartLabels: data.labels,
               };
-              setTimeout(() => {
-                this.stopCardLoading(card);
-              }, 1000);
+              const doughnutChartCard = this.allCards.find(({ _id }) => {
+                return _id == card._id;
+              });
+              doughnutChartCard &&
+                (doughnutChartCard.option = {
+                  doughnutChartDatasets: data.datasets,
+                  doughnutChartLabels: data.labels,
+                });
+              this.stopCardLoading(card);
               break;
             case 'pie-chart_test3':
               card.option = {
                 pieChartDatasets: data.datasets,
                 pieChartLabels: data.labels,
               };
-              setTimeout(() => {
-                this.stopCardLoading(card);
-              }, 1000);
+              const pieChartCard = this.allCards.find(({ _id }) => {
+                return _id == card._id;
+              });
+              pieChartCard &&
+                (pieChartCard.option = {
+                  pieChartDatasets: data.datasets,
+                  pieChartLabels: data.labels,
+                });
+              this.stopCardLoading(card);
               break;
             case 'table_element':
-              setTimeout(() => {
-                this.stopCardLoading(card);
-                this.dataSource = new MatTableDataSource<any>(data);
-                this.ref.detectChanges();
-
-                this.dataSource.paginator = this.paginator;
-              }, 1000);
+              this.stopCardLoading(card);
+              this.dataSource = new MatTableDataSource<any>(data);
+              this.ref.detectChanges();
+              this.dataSource.paginator = this.paginator;
               break;
           }
         }
@@ -178,47 +206,8 @@ export class DashboardComponent implements OnInit {
       return card._id === _id;
     })!.isLoading = false;
   };
-}
 
-export const cards: DashboardCard[] = [
-  {
-    _id: 1,
-    type: 'bar-chart',
-    description: 'abc',
-    cols: 1,
-    rows: 1,
-    enabled: true,
-  },
-  {
-    _id: 2,
-    type: 'line-chart',
-    description: 'test',
-    cols: 1,
-    rows: 1,
-    enabled: true,
-  },
-  {
-    _id: 3,
-    type: 'doughnut-chart',
-    description: 'test2',
-    cols: 1,
-    rows: 1,
-    enabled: true,
-  },
-  {
-    _id: 4,
-    type: 'pie-chart',
-    description: 'test3',
-    cols: 1,
-    rows: 1,
-    enabled: true,
-  },
-  {
-    _id: 5,
-    type: 'table',
-    description: 'element',
-    cols: 2,
-    rows: 2,
-    enabled: true,
-  },
-];
+  ngOnDestroy(): void {
+    this.filterSubs.unsubscribe();
+  }
+}

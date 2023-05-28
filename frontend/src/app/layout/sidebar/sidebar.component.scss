@@ -6,21 +6,32 @@
 .logo {
   width: 24px;
   height: 24px;
-  vertical-align: middle;
+  margin-bottom: -9px;
   padding: 0.2em;
 }
 
 .contents {
-  width: 200px;
+  width: 150px;
   display: flex;
   flex-direction: column;
-  align-items: first baseline;
+  align-items: flex-start;
   line-height: 1.25rem;
-  padding: 0.625rem 0;
+  padding: 0.625rem 20px;
   cursor: pointer;
-
+  gap: 17px;
 }
 
 .toolbar {
   justify-content: space-between;
+}
+
+.icon {
+  margin-bottom: -7px;
+}
+
+.menu-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10px;
 }

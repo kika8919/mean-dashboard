@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environment/environment';
 
 @Injectable({
@@ -10,7 +10,14 @@ export class DashboardService {
   dashboardBaseUrl: string = `${environment.api_url}${environment.dashboard_endpoint}`;
   cardBaseUrl: string = `${environment.api_url}${environment.card_endpoint}`;
 
+  private filterValueSource = new BehaviorSubject('');
+  public filterValue = this.filterValueSource.asObservable();
+
   constructor(private http: HttpClient) {}
+
+  setFilterValue(value: string) {
+    this.filterValueSource.next(value);
+  }
 
   getBarChartData(): Observable<any> {
     return this.http.get(

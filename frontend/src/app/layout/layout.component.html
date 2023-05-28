@@ -1,26 +1,11 @@
-
-
-
-<mat-sidenav-container>
-    <mat-sidenav #sidenav>
-      <app-sidebar (closeSideNav)="sidenav.close()"></app-sidebar>
-    </mat-sidenav>
-    <mat-sidenav-content>
-      <!-- <app-toolbar
-        *ngIf="showAppHeader && showHeader"
-        (SideNavToggle)="sidenav.toggle()"
-      ></app-toolbar>
-      <main
-        [ngClass]="{
-          main_content: showAppHeader === true && showHeader === true
-        }"
-      > -->
-        <!-- <router-outlet></router-outlet> -->
-      <!-- </main> -->
-      <app-nav  (SideNavToggle)="sidenav.toggle()"></app-nav>
-      <main style="padding-top: 45px; background-color: #d4e2f2">
-        <router-outlet></router-outlet>
-      </main>
-
-    </mat-sidenav-content>
-  </mat-sidenav-container>
+<mat-sidenav-container style="height: 100vh">
+  <mat-sidenav #sidenav>
+    <app-sidebar (closeSideNav)="sidenav.close()"></app-sidebar>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <app-nav (SideNavToggle)="sidenav.toggle()"></app-nav>
+    <main class="main-content">
+      <router-outlet></router-outlet>
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>

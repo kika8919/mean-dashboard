@@ -23,7 +23,7 @@ export class SidebarComponent {
   }
 
   gotoCard() {
-    this.router.navigate(['/card']);
+    this.router.navigate(['/sign-up']);
     this.onToggleClose();
   }
 }

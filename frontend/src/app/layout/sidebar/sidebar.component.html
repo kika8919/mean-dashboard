@@ -1,17 +1,22 @@
 <mat-toolbar class="toolbar">
   <span>
-    <mat-icon class="logo">view_module</mat-icon>
-    <span class="mat-title"> DAS </span>
+    <mat-icon class="logo material-symbols-outlined">home</mat-icon>
+    <span class="mat-title"> Menu </span>
   </span>
   <mat-icon class="close" (click)="onToggleClose()">close</mat-icon>
 </mat-toolbar>
 <div class="contents">
-  <a mat-menu-item (click)="gotoDashboard()" class="toolbar">
-    <mat-icon>view_module</mat-icon>
+  <a mat-menu-item (click)="gotoDashboard()" class="menu-item">
+    <mat-icon class="icon"
+      ><span class="material-symbols-outlined"> grid_view </span></mat-icon
+    >
     <span>Dashboard</span>
   </a>
-  <a mat-menu-item (click)="gotoCard()" class="toolbar">
-    <mat-icon>supervisor_account</mat-icon>
-    <span>Cards</span>
+  <a mat-menu-item (click)="gotoCard()" class="menu-item">
+    <mat-icon class="icon"
+      ><span class="material-symbols-outlined"> person_add </span></mat-icon
+    >
+
+    <span>Sign Up</span>
   </a>
 </div>
