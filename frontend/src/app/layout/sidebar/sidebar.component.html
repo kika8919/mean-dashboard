@@ -1,0 +1,33 @@
+<mat-toolbar class="toolbar">
+  <span>
+    <mat-icon class="logo material-symbols-outlined">home</mat-icon>
+    <span class="mat-title"> Menu </span>
+  </span>
+  <mat-icon class="close" (click)="onToggleClose()">close</mat-icon>
+</mat-toolbar>
+<div class="contents">
+  <a mat-menu-item (click)="gotoLogin()" class="menu-item" *ngIf="!isLoggedIn">
+    <mat-icon class="icon"
+      ><span class="material-symbols-outlined"> login </span></mat-icon
+    >
+    <span>Login</span>
+  </a>
+  <a
+    mat-menu-item
+    (click)="gotoDashboard()"
+    class="menu-item"
+    *ngIf="isLoggedIn"
+  >
+    <mat-icon class="icon"
+      ><span class="material-symbols-outlined"> grid_view </span></mat-icon
+    >
+    <span>Dashboard</span>
+  </a>
+
+  <a mat-menu-item (click)="logout()" class="menu-item" *ngIf="isLoggedIn">
+    <mat-icon class="icon"
+      ><span class="material-symbols-outlined">logout </span></mat-icon
+    >
+    <span>Logout</span>
+  </a>
+</div>
