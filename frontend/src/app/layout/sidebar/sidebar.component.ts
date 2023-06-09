@@ -1,29 +1,48 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/core';
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit {
   @Output() closeSideNav = new EventEmitter();
 
-  constructor(private router: Router) {}
+  isLoggedIn: boolean = false;
+
+  constructor(private router: Router, private userSvc: UserService) {}
 
   onToggleClose() {
     this.closeSideNav.emit();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.userSvc.isAuthenticated.subscribe({
+      next: (data) => {
+        this.isLoggedIn = data || this.userSvc.hasToken();
+      },
+      error: () => {
+        this.isLoggedIn = false;
+      },
+    });
+  }
 
   gotoDashboard() {
     this.router.navigate(['/dashboard']);
     this.onToggleClose();
   }
 
-  gotoCard() {
-    this.router.navigate(['/sign-up']);
+  gotoLogin() {
+    this.router.navigate(['/login']);
+    this.onToggleClose();
+  }
+
+  logout() {
+    this.userSvc.purgeAuth();
+    this.router.navigate(['/login']);
+
     this.onToggleClose();
   }
 }

@@ -10,6 +10,7 @@ dotenv.config({ debug: true });
 const PORT = process.env.PORT || 3000;
 
 require("./db/db");
+require("./config/passport");
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));

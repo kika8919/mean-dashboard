@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 require("../model/DashboardCard");
+require("../model/User");
 
 const uri = process.env.MONGODB_URI;
 
