@@ -1,5 +1,5 @@
 export const environment = {
-  api_url: 'http://localhost:3000/api',
+  api_url: 'https://dashboard-sage-psi.vercel.app/api',
   auth_endpoint: '/auth',
   dashboard_endpoint: '/dashboard',
   card_endpoint: '/card',
